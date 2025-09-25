@@ -10,6 +10,7 @@ const MESSAGE_OK = {status: true, status_code: 200, development: 'Marcelo Vieira
 
 const dados = require('./contatos.js')
 
+//listar todos os dados de todos os usuarios
 const getAllData = () => {
 
     let message = {MESSAGE_OK, Todos_os_Dados: []}
@@ -18,25 +19,62 @@ const getAllData = () => {
         message.Todos_os_Dados.push(item)
     })
 
-    if(dados.contatos['whats-users'])
-        return console.log(message)//CONSOLE LOG TEMPORARIO
-    else
-        return console.log(MESSAGE_ERRO)//CONSOLE LOG TEMPORARIO
+        return message
 
 }
 
-getAllData()//TEMPORARIO PARA TESTE
+//listar os dados de todos os perfis de usuarios
+const getUserProfile = () => {
 
-const getDadosUsersProfile = () => {}
+    let perfis = []
 
-const getDadosUsers = () => {}
+    dados.contatos['whats-users'].forEach(perfil => {
+        perfis.push({
+            Nome: perfil.account,
+            Nick: perfil.nickname,
+            Foto: perfil['profile-image'],
+            Cor_de_Fundo: perfil.background,
+            Numero: perfil.number,
+            Inicio_Conta: perfil['created-since'].start,
+            Encerramento_Conta: perfil['created-since'].end
+        })
+    })
 
-const getAllUserMessages = () => {}
+    let message = {MESSAGE_OK, Informacoes_Perfis: perfis}
 
-const getChatUserWithContact = () => {}
+    return message
 
-const getSearchByKeyword = () => {}
+}
 
-// module.exports = {
-//     getAllDados
-// }
+//listar todos os contatos de um usuario (filtrado pelo número)
+const getUserContacts = (numeroUsuario) => {
+
+    let dadosUsuario = dados.contatos['whats-users'].find(usuario => usuario.number == numeroUsuario)
+    
+    let dadosContatos = []
+    
+    dadosUsuario.contacts.forEach(contato => {
+        dadosContatos.push({
+            Nome: contato.name,
+            Foto: contato.image,
+            Descricao: contato.description,
+            Numero: contato.number
+        })
+    })
+
+    let message = {MESSAGE_OK, Usuario: dadosUsuario.account, Contatos: dadosContatos}
+
+    return message
+
+}
+
+//listar todas as mensagens de um usuario (filtrado pelo número)
+const getAllUserMessages = (numeroUsuario) => {}
+
+//listar todas as mensagens de um usuario com um contato especifico (filtrado pelo número do usuario e número do contato)
+const getUserChatWithContact = (numeroUsuario, numeroContato) => {}
+
+//pesquisa de palavra chave com base em uma palavra nas conversas do usuário e do respectivo contato
+const getSearchByKeyword = (palavraChave, numeroUsuario, numeroContato) => {}
+
+// module.exports = {}
