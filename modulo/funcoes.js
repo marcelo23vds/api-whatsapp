@@ -69,10 +69,38 @@ const getUserContacts = (numeroUsuario) => {
 }
 
 //listar todas as mensagens de um usuario (filtrado pelo número)
-const getAllUserMessages = (numeroUsuario) => {}
+const getAllUserMessages = (numeroUsuario) => {
+
+    let dadosUsuario = dados.contatos['whats-users'].find(usuario => usuario.number == numeroUsuario)
+    
+    let dadosMensagens = []
+    
+    dadosUsuario.contacts.forEach(contato => {
+        dadosMensagens.push(contato.messages)
+    })
+
+    let message = {MESSAGE_OK, Usuario: dadosUsuario.account, Mensagens: dadosMensagens}
+
+    return message
+
+}
 
 //listar todas as mensagens de um usuario com um contato especifico (filtrado pelo número do usuario e número do contato)
-const getUserChatWithContact = (numeroUsuario, numeroContato) => {}
+const getUserChatWithContact = (numeroUsuario, numeroContato) => {
+
+    let dadosUsuario = dados.contatos['whats-users'].find(usuario => usuario.number == numeroUsuario)
+    let dadosDestinatario = dadosUsuario.contacts.find(destinatario => destinatario.number == numeroContato)
+
+    //let dadosMensagens = []
+
+    let message = {MESSAGE_OK, Usuario: dadosUsuario.account, Mensagens_com_o_contato_informado: dadosDestinatario.messages}
+
+    console.log(message)
+    // return message
+
+}
+
+getUserChatWithContact('11966578996', '26999999916')
 
 //pesquisa de palavra chave com base em uma palavra nas conversas do usuário e do respectivo contato
 const getSearchByKeyword = (palavraChave, numeroUsuario, numeroContato) => {}
