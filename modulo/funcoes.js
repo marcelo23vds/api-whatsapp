@@ -89,20 +89,21 @@ const getAllUserMessages = (numeroUsuario) => {
 const getUserChatWithContact = (numeroUsuario, numeroContato) => {
 
     let dadosUsuario = dados.contatos['whats-users'].find(usuario => usuario.number == numeroUsuario)
-    let dadosDestinatario = dadosUsuario.contacts.find(destinatario => destinatario.number == numeroContato)
+    let dadosContato = dadosUsuario.contacts.find(contato => contato.number == numeroContato)
 
-    //let dadosMensagens = []
+    let perfilContato = {Nome: dadosContato.name, Numero: dadosContato.number}
 
-    let message = {MESSAGE_OK, Usuario: dadosUsuario.account, Mensagens_com_o_contato_informado: dadosDestinatario.messages}
+    let message = {MESSAGE_OK, Usuario: dadosUsuario.account, Contato: perfilContato, Mensagens: dadosContato.messages}
 
-    console.log(message)
-    // return message
+    return message
 
 }
 
-getUserChatWithContact('11966578996', '26999999916')
+getUserChatWithContact('11966578996','26999999916')
 
 //pesquisa de palavra chave com base em uma palavra nas conversas do usuário e do respectivo contato
-const getSearchByKeyword = (palavraChave, numeroUsuario, numeroContato) => {}
+const getSearchByKeyword = (palavraChave, numeroUsuario, numeroContato) => {
+
+}
 
 // module.exports = {}
