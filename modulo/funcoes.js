@@ -10,6 +10,21 @@ const MESSAGE_OK = {status: true, status_code: 200, development: 'Marcelo Vieira
 
 const dados = require('./contatos.js')
 
+//As duas funções abaixo são de apoio para as funções da API
+
+//função que captura os dados do USUARIO de acordo com o numero de telefone dele
+const getUserData = (numeroUsuario) => {
+    let dadosUsuario = dados.contatos['whats-users'].find(usuario => usuario.number == numeroUsuario)
+    return dadosUsuario
+}
+//função que captura os dados de um CONTATO de acordo com o numero de telefone do usuario e do contato
+const getContactData = (numeroUsuario, numeroContato) => {
+    let dadosContato = getUserData(numeroUsuario).contacts.find(contato => contato.number == numeroContato)
+    return dadosContato
+}
+
+//Funcionalidades da API
+
 //listar todos os dados de todos os usuarios
 const getAllData = () => {
 
@@ -49,7 +64,7 @@ const getUserProfile = () => {
 //listar todos os contatos de um usuario (filtrado pelo número)
 const getUserContacts = (numeroUsuario) => {
 
-    let dadosUsuario = dados.contatos['whats-users'].find(usuario => usuario.number == numeroUsuario)
+    let dadosUsuario = getUserData(numeroUsuario)
     
     let dadosContatos = []
     
@@ -71,7 +86,7 @@ const getUserContacts = (numeroUsuario) => {
 //listar todas as mensagens de um usuario (filtrado pelo número)
 const getAllUserMessages = (numeroUsuario) => {
 
-    let dadosUsuario = dados.contatos['whats-users'].find(usuario => usuario.number == numeroUsuario)
+    let dadosUsuario = getUserData(numeroUsuario)
     
     let dadosMensagens = []
     
@@ -88,8 +103,8 @@ const getAllUserMessages = (numeroUsuario) => {
 //listar todas as mensagens de um usuario com um contato especifico (filtrado pelo número do usuario e número do contato)
 const getUserChatWithContact = (numeroUsuario, numeroContato) => {
 
-    let dadosUsuario = dados.contatos['whats-users'].find(usuario => usuario.number == numeroUsuario)
-    let dadosContato = dadosUsuario.contacts.find(contato => contato.number == numeroContato)
+    let dadosUsuario = getUserData(numeroUsuario)
+    let dadosContato = getContactData(numeroUsuario, numeroContato)
 
     let perfilContato = {Nome: dadosContato.name, Numero: dadosContato.number}
 
@@ -99,11 +114,19 @@ const getUserChatWithContact = (numeroUsuario, numeroContato) => {
 
 }
 
-getUserChatWithContact('11966578996','26999999916')
-
 //pesquisa de palavra chave com base em uma palavra nas conversas do usuário e do respectivo contato
 const getSearchByKeyword = (palavraChave, numeroUsuario, numeroContato) => {
 
+    let dadosUsuario = getUserData(numeroUsuario)
+    let dadosContato = getContactData(numeroUsuario, numeroContato)
+
+    let resultadoBusca = dadosContato.messages.filter(mensagem => mensagem.content.toLowerCase().includes(palavraChave.toLowerCase()))
+
+    let perfilContato = {Nome: dadosContato.name, Numero: dadosContato.number}
+
+    let message = {MESSAGE_OK, Usuario: dadosUsuario.account, Contato: perfilContato, Resultado_da_Busca: resultadoBusca}
+
+    return message
 }
 
 // module.exports = {}
