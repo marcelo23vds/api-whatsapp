@@ -6,7 +6,6 @@
 * **********************************************************************/
 
 const MESSAGE_ERRO = {status: false, status_code: 500, development: 'Marcelo Vieira'}
-const MESSAGE_OK = {status: true, status_code: 200, development: 'Marcelo Vieira'}
 
 const dados = require('./contatos.js')
 
@@ -38,7 +37,7 @@ const getAllData = () => {
     try {
 
         //formatação da mensagem de retorno desta funcionalidade
-        let message = {MESSAGE_OK, Todos_os_Dados: []}
+        let message = {status: true, status_code: 200, development: 'Marcelo Vieira', Todos_os_Dados: []}
 
         //varrendo o arquivo e exibindo todos os dados
         dados.contatos['whats-users'].forEach(item => {
@@ -54,7 +53,7 @@ const getAllData = () => {
 }
 
 //listar os dados de todos os perfis de usuarios
-const getUserProfile = () => {
+const getAllUsersProfile = () => {
 
     try {
 
@@ -75,7 +74,7 @@ const getUserProfile = () => {
         })
 
         //formatação da mensagem de retorno desta funcionalidade
-        let message = {MESSAGE_OK, Informacoes_Perfis: perfis}
+        let message = {status: true, status_code: 200, development: 'Marcelo Vieira', Informacoes_Perfis: perfis}
         return message
         
     } catch {
@@ -84,7 +83,7 @@ const getUserProfile = () => {
 }
 
 //listar todos os contatos de um usuario (filtrado pelo número)
-const getUserContacts = (numeroUsuario) => {
+const getAllUserContacts = (numeroUsuario) => {
 
     try {
 
@@ -105,7 +104,7 @@ const getUserContacts = (numeroUsuario) => {
         })
 
         //formatação da mensagem de retorno desta funcionalidade
-        let message = {MESSAGE_OK, Usuario: dadosUsuario.account, Contatos: dadosContatos}
+        let message = {status: true, status_code: 200, development: 'Marcelo Vieira', Usuario: dadosUsuario.account, Contatos: dadosContatos}
         return message
 
     } catch {
@@ -130,7 +129,7 @@ const getAllUserMessages = (numeroUsuario) => {
         })
 
         //formatação da mensagem de retorno desta funcionalidade
-        let message = {MESSAGE_OK, Usuario: dadosUsuario.account, Mensagens: dadosMensagens}
+        let message = {status: true, status_code: 200, development: 'Marcelo Vieira', Usuario: dadosUsuario.account, Mensagens: dadosMensagens}
         return message
 
     } catch {
@@ -153,7 +152,7 @@ const getUserChatWithContact = (numeroUsuario, numeroContato) => {
         let perfilContato = {Nome: dadosContato.name, Numero: dadosContato.number}
 
         //formatação da mensagem de retorno desta funcionalidade
-        let message = {MESSAGE_OK, Usuario: dadosUsuario.account, Contato: perfilContato, Mensagens: dadosContato.messages}
+        let message = {status: true, status_code: 200, development: 'Marcelo Vieira', Usuario: dadosUsuario.account, Contato: perfilContato, Mensagens: dadosContato.messages}
 
         return message
 
@@ -182,7 +181,7 @@ const getSearchByKeyword = (palavraChave, numeroUsuario, numeroContato) => {
         let perfilContato = {Nome: dadosContato.name, Numero: dadosContato.number}
 
         //formatação da mensagem de retorno desta funcionalidade
-        let message = {MESSAGE_OK, Usuario: dadosUsuario.account, Contato: perfilContato, Resultado_da_Busca: resultadoBusca}
+        let message = {status: true, status_code: 200, development: 'Marcelo Vieira', Usuario: dadosUsuario.account, Contato: perfilContato, Resultado_da_Busca: resultadoBusca}
 
         return message
 
@@ -193,8 +192,8 @@ const getSearchByKeyword = (palavraChave, numeroUsuario, numeroContato) => {
 
 module.exports = {
     getAllData,
-    getUserProfile,
-    getUserContacts,
+    getAllUsersProfile,
+    getAllUserContacts,
     getAllUserMessages,
     getUserChatWithContact,
     getSearchByKeyword
