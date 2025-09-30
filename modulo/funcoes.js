@@ -53,28 +53,28 @@ const getAllData = () => {
 }
 
 //listar os dados de todos os perfis de usuarios
-const getAllUsersProfile = () => {
+const getUserProfile = (numeroUsuario) => {
 
     try {
 
-        //armazenar as informações de perfis que serão buscadas no arquivo
-        let perfis = []
+        //armazenando os dados do usuario filtrado pelo numero(parametro)
+        let dadosUsuario = getUserData(numeroUsuario)
 
-        //varrer o arquivo e enviar as informações selecionadas para a variavel perfis
-        dados.contatos['whats-users'].forEach(perfil => {
-            perfis.push({
-                Nome: perfil.account,
-                Nick: perfil.nickname,
-                Foto: perfil['profile-image'],
-                Cor_de_Fundo: perfil.background,
-                Numero: perfil.number,
-                Inicio_Conta: perfil['created-since'].start,
-                Encerramento_Conta: perfil['created-since'].end
-            })
-        })
+        let perfil = [
+            {
+                Nome: dadosUsuario.account,
+                Nick: dadosUsuario.nickname,
+                Foto: dadosUsuario['profile-image'],
+                Cor_de_Fundo: dadosUsuario.background,
+                Numero: dadosUsuario.number,
+                Inicio_Conta: dadosUsuario['created-since'].start,
+                Encerramento_Conta: dadosUsuario['created-since'].end
+            }
+        ]
 
         //formatação da mensagem de retorno desta funcionalidade
-        let message = {status: true, status_code: 200, development: 'Marcelo Vieira', Informacoes_Perfis: perfis}
+        let message = {status: true, status_code: 200, development: 'Marcelo Vieira', Informacoes_perfil: perfil}
+
         return message
         
     } catch {
@@ -192,7 +192,7 @@ const getSearchByKeyword = (palavraChave, numeroUsuario, numeroContato) => {
 
 module.exports = {
     getAllData,
-    getAllUsersProfile,
+    getUserProfile,
     getAllUserContacts,
     getAllUserMessages,
     getUserChatWithContact,

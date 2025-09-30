@@ -41,11 +41,12 @@ app.get('/v1/whatsapp/users/all-data', function(request, response){
     response.json(usuarios)
 })
 
-//listar os dados de todos os perfis de usuarios
-app.get('/v1/whatsapp/users/profiles', function(request, response){
-    let usuarios = dados.getAllUsersProfile()
-    response.status(usuarios.status_code)
-    response.json(usuarios)
+//listar os dados de perfil de usuario
+app.get('/v1/whatsapp/user/profile', function(request, response){
+    let numeroUsuario = request.query.userNumber
+    let usuario = dados.getUserProfile(numeroUsuario)
+    response.status(usuario.status_code)
+    response.json(usuario)
 })
 
 //listar todos os contatos de um usuario (filtrado pelo número)
